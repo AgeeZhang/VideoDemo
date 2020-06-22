@@ -11,6 +11,25 @@
         android:id="@+id/playVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="播放视频" />
+        android:layout_margin="10dp"
+        android:text="播放视频"
+        android:onClick="onClick" />
+
+
+    <Button
+        android:id="@+id/playVideo_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="播放视频（新）"
+        android:onClick="onClick"/>
+
+    <Button
+        android:id="@+id/playVideo_exo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="播放视频（Exo）"
+        android:onClick="onClick"/>
 
 </LinearLayout>

@@ -13,8 +13,10 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".VideoActivity"></activity>
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".ExoPlayerActivity"></activity>
+        <activity android:name=".SimpleVideoActivity"></activity>
+        <activity android:name=".VideoActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

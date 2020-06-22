@@ -43,10 +43,10 @@ public class VideoActivity extends AppCompatActivity {
         public void run() {
             // 获得当前播放时间和当前视频的长度
             if (mVideoView.isPlaying()) {
-                currentPosition = mVideoView.getCurrentPosition();
-                duration = mVideoView.getDuration();
-                float proportion = ((float) currentPosition / (float) duration);
                 M3u8Ts m3u8Ts = mM3u8.getTsList().get(mPlayIndex);
+                currentPosition = mVideoView.getCurrentPosition();
+                duration = Math.round(m3u8Ts.getTotalDuration() * 1000);
+                float proportion = ((float) currentPosition / (float) duration);
                 int time = Math.round(m3u8Ts.getStartTime() + (m3u8Ts.getTotalDuration() * proportion));
                 // 设置进度条的主要进度，表示当前的播放时间
                 mSeekBar.setProgress(time);
@@ -76,17 +76,18 @@ public class VideoActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                handler.removeCallbacks(runnable);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Toast.makeText(getApplicationContext(), "拖动进度条！", Toast.LENGTH_LONG).show();
-                mVideoView.stopPlayback();
+                mVideoView.pause();
                 int progress = seekBar.getProgress();
                 mPlayIndex = VideoUtil.getM3U8TsIndex(mM3u8, progress);
                 M3u8Ts m3u8Ts = mM3u8.getTsList().get(mPlayIndex);
                 playClip(mPlayIndex, Math.round(progress - m3u8Ts.getStartTime()) * 1000);
+                handler.postDelayed(runnable, 1000);
             }
         });
         initVideoView();
@@ -196,8 +197,8 @@ public class VideoActivity extends AppCompatActivity {
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT: //向左键
             {
-                mVideoView.stopPlayback();
-                int progress = mSeekBar.getProgress() - 10;
+                mVideoView.pause();
+                int progress = mSeekBar.getProgress() - 3;
                 mPlayIndex = VideoUtil.getM3U8TsIndex(mM3u8, progress);
                 M3u8Ts m3u8Ts = mM3u8.getTsList().get(mPlayIndex);
                 playClip(mPlayIndex, Math.round(progress - m3u8Ts.getStartTime()) * 1000);
@@ -205,8 +206,8 @@ public class VideoActivity extends AppCompatActivity {
             break;
             case KeyEvent.KEYCODE_DPAD_RIGHT:  //向右键
             {
-                mVideoView.stopPlayback();
-                int progress = mSeekBar.getProgress() + 10;
+                mVideoView.pause();
+                int progress = mSeekBar.getProgress() + 3;
                 mPlayIndex = VideoUtil.getM3U8TsIndex(mM3u8, progress);
                 M3u8Ts m3u8Ts = mM3u8.getTsList().get(mPlayIndex);
                 playClip(mPlayIndex, Math.round(progress - m3u8Ts.getStartTime()) * 1000);

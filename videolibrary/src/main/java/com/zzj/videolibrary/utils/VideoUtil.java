@@ -168,7 +168,7 @@ public class VideoUtil {
         int index = -1;
         for (int i = 0; i < m3u8.getTsList().size(); i++) {
             M3u8Ts m3u8Ts = m3u8.getTsList().get(i);
-            if (progress > m3u8Ts.getStartTime() && progress < m3u8Ts.getEndTime()) {
+            if (progress >= m3u8Ts.getStartTime() && progress < m3u8Ts.getEndTime()) {
                 index = i;
                 break;
             }

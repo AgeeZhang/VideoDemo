@@ -10,26 +10,16 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button mButton;
     private static String[] mPermissionArray = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mButton = findViewById(R.id.playVideo);
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-                startActivity(intent);
-            }
-        });
         checkOrgPermission();
     }
 
@@ -66,4 +56,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent intent = null;
+        if (v.getId() == R.id.playVideo) {
+            intent = new Intent(MainActivity.this, VideoActivity.class);
+        } else if (v.getId() == R.id.playVideo_new) {
+            intent = new Intent(MainActivity.this, SimpleVideoActivity.class);
+        } else if (v.getId() == R.id.playVideo_exo) {
+            intent = new Intent(MainActivity.this, ExoPlayerActivity.class);
+        }
+        if (intent != null)
+            startActivity(intent);
+    }
 }
